@@ -21,6 +21,7 @@ client.login(process.env.DISCORD_BOT_TOKEN)
 //Loop each 15 seconds (variable for the 15 seconds)
 var Interval=setInterval(getFloorPrice, MILLISECONDES_BEFORE_REFRESH);
 var floor_price;
+var avgPrice24h;
 
 // Call the magicEden API to get details on the angrybearclub collection (var for the name)
 function getFloorPrice(){
@@ -37,15 +38,20 @@ function getFloorPrice(){
       console.log(json);
       //Get Floor price of the collection
       floor_price=json.floorPrice / NUMBER_FOR_DIVIDE;
+      avgPrice24h=json.avgPrice24hr / NUMBER_FOR_DIVIDE;
       //Print it in console 
       console.log("The floor price returned is : ")
       console.log(floor_price);
+      console.log("The avg price on 24h returned is : ")
+      console.log(avgPrice24h);
       update_activity_status();
     });
 }
 
 //V2 : Print the floor price in profile description 
 function update_activity_status(){
-    console.log(`Floor is at ${floor_price} SOL`);
-    client.user.setActivity(`Floor is at ${floor_price} SOL`, { type: 'WATCHING' });
+    console.log(`FP ${floor_price} SOL`);
+    console.log(`Avg 24h : ${avgPrice24h} SOL`);
+    client.user.setUsername(`FP ${floor_price} SOL`);
+    client.user.setActivity(`Avg 24h : ${avgPrice24h} SOL`, { type: 'WATCHING' });
 }
