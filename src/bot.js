@@ -11,24 +11,23 @@ NUMBER_FOR_DIVIDE=1000000000;
 const Discord = require('discord.js');
 const { cp } = require('fs');
 
+
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS] });
 
-const https = require('https');
+client.on('ready', async () => {
+  const GUILD_ID = client.guilds.cache.map(guild => guild.id);
+  const guild = await client.guilds.fetch(GUILD_ID[0]);
+  const https = require('https');
+  console.log('Bot is connected...');
+  var floor_price;
+  var avgPrice24h;
 
-//Log our bot in using the variable 
-client.login(process.env.DISCORD_BOT_TOKEN)
-
-//Loop each 15 seconds (variable for the 15 seconds)
-var Interval=setInterval(getFloorPrice, MILLISECONDES_BEFORE_REFRESH);
-var floor_price;
-var avgPrice24h;
-
-// Call the magicEden API to get details on the angrybearclub collection (var for the name)
-function getFloorPrice(){
+  setInterval(async function(){
+    // Call the magicEden API to get details on the angrybearclub collection (var for the name)
     var request = require('request');
     var options = {
       'method': 'GET',
-      'url': 'http://api-mainnet.magiceden.dev/v2/collections/boryoku_dragonz/stats',
+      'url': 'http://api-mainnet.magiceden.dev/v2/collections/astrals/stats',
       'headers': {
       }
     };
@@ -44,17 +43,21 @@ function getFloorPrice(){
       console.log(floor_price);
       console.log("The avg price on 24h returned is : ")
       console.log(avgPrice24h);
-      update_activity_status();
     });
-}
 
-//V2 : Print the floor price in profile description 
-function update_activity_status(){
-    console.log(`FP ${floor_price} SOL`);
+    //V2 : Print the floor price in profile description 
     const nickname = `FP ${floor_price} SOL`;
+    console.log(nickname);
     console.log(`Avg 24h : ${avgPrice24h} SOL`);
     const bot_id = client.application.id;
-    Discord.Guild.me.setNickname(nickname);
+    guild.me.setNickname(nickname);
     //client.user.setUsername(`FP ${floor_price} SOL`);
     client.user.setActivity(`Avg 24h : ${avgPrice24h} SOL`, { type: 'WATCHING' });
-}
+
+  }, MILLISECONDES_BEFORE_REFRESH)
+
+});
+
+//Log our bot in using the variable 
+client.login(process.env.DISCORD_BOT_TOKEN);
+
