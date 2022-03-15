@@ -46,7 +46,7 @@ client.on('ready', async () => {
     });
 
     //V2 : Print the floor price in profile description 
-    const nickname = `FP ${floor_price} SOL`;
+    const nickname = `FP\: ${floor_price} SOL`;
     console.log(nickname);
     console.log(`Avg 24h : ${avgPrice24h} SOL`);
     const bot_id = client.application.id;
