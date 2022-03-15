@@ -8,10 +8,10 @@ NUMBER_FOR_DIVIDE=1000000000;
 //console.log(process.env.DISCORD_BOT_TOKEN);
 
 //Import the Client class from the library 
-const { Client, Intents } = require('discord.js');
+const Discord = require('discord.js');
 const { cp } = require('fs');
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS] });
 
 const https = require('https');
 
@@ -51,7 +51,10 @@ function getFloorPrice(){
 //V2 : Print the floor price in profile description 
 function update_activity_status(){
     console.log(`FP ${floor_price} SOL`);
+    const nickname = `FP ${floor_price} SOL`;
     console.log(`Avg 24h : ${avgPrice24h} SOL`);
-    client.user.setUsername(`FP ${floor_price} SOL`);
+    const bot_id = client.application.id;
+    Discord.Guild.me.setNickname(nickname);
+    //client.user.setUsername(`FP ${floor_price} SOL`);
     client.user.setActivity(`Avg 24h : ${avgPrice24h} SOL`, { type: 'WATCHING' });
 }
