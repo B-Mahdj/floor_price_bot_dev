@@ -39,7 +39,7 @@ client.on('ready', async () => {
       avgPrice24h=floatParse2(json.avgPrice24hr / NUMBER_FOR_DIVIDE);
       listedCount=json.listedCount;
       volumeAll=floatParse2(json.volumeAll / NUMBER_FOR_DIVIDE);
-      percentage_listed= (listedCount / NUMBER_OF_NFT_IN_COLLECTION) * 100;
+      percentage_listed= floatParse2((listedCount / NUMBER_OF_NFT_IN_COLLECTION) * 100);
 
       //Print it in console 
       console.log("The floor price returned is : ")
