@@ -26,7 +26,7 @@ client.on('ready', async () => {
     var request = require('request');
     var options = {
       'method': 'GET',
-      'url': 'http://api-mainnet.magiceden.dev/v2/collections/astrals/stats',
+      'url': 'http://api-mainnet.magiceden.dev/v2/collections/sussy_sol_cats/stats',
       'headers': {
       }
     };
